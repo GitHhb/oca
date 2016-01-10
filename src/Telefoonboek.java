@@ -2,28 +2,30 @@ import java.util.ArrayList;
 
 public class Telefoonboek {
     public static void main(String[] args){
-        //ArrayList<PersonData> persons = new ArrayList<>();
-        PersonData persons = new PersonData();
+        ArrayList<PersonData> persons = new ArrayList<>();
+        //PersonData persons = new PersonData();
         persons.add(new PersonData("Jan", "Jansen", "040123", false));
         persons.add(new PersonData("Piet", "Pieters", "040124", true));
         persons.add(new PersonData("Kees", "Pieters", "040122", false));
         persons.add(new PersonData("Truus", "de Jager", "043944", false));
         persons.add(new PersonData("Klara", "Renders", "29485", false));
+        System.out.println();
 
         //System.out.println(persons.get(0));
-        persons.printAll();
-
+        PersonData.printAll(persons);
         System.out.println();
+
         System.out.println("Search on first name:");
-        persons.searchFirstName(PersonData.Key.FIRSTNAME, "Piet");
+        PersonData.searchForKey(PersonData.Key.FIRSTNAME, "Piet", persons);
         System.out.println("Search on last name:");
-        persons.searchFirstName(PersonData.Key.LASTNAME, "de Jager");
+        PersonData.searchForKey(PersonData.Key.LASTNAME, "de Jager", persons);
         System.out.println("Search on phone number:");
-        persons.searchFirstName(PersonData.Key.PHONENR, "040123");
+        PersonData.searchForKey(PersonData.Key.PHONENR, "040123", persons);
     }
 }
 
-class PersonData extends ArrayList<PersonData> {
+//class PersonData extends ArrayList<PersonData> {
+class PersonData{
     // Kenmerken van een persoon
     String firstName;
     String lastName;
@@ -38,7 +40,8 @@ class PersonData extends ArrayList<PersonData> {
         this.lastName  = lastName;
         this.phoneNr   = phoneNr;
         this.phoneNrSecret = phoneNrSecret;
-        System.out.println("Added: " + firstName);
+        System.out.print("Added: ");
+        printPerson(this);
     }
 
     // methods
@@ -46,19 +49,19 @@ class PersonData extends ArrayList<PersonData> {
         return firstName + " " + lastName + ", phone: " + (phoneNrSecret? "*******" : phoneNr);
     }
 
-    public void printAll(){
-        for (PersonData p: this)
+    static public void printAll(ArrayList<PersonData> persons){
+        for (PersonData p: persons)
             printPerson(p);
     }
 
-    public void printPerson(PersonData p){
+    static public void printPerson(PersonData p){
         System.out.println(p);
     }
 
     enum Key {FIRSTNAME, LASTNAME, PHONENR}
 
-    public void searchFirstName (Key sk , String value){
-        for (PersonData p: this)
+    static public void searchForKey (Key sk , String value, ArrayList<PersonData> persons){
+        for (PersonData p: persons)
         switch (sk) {
             case FIRSTNAME:
                 if (p.firstName.equals(value)) printPerson(p);
