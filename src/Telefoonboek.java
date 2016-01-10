@@ -6,11 +6,20 @@ public class Telefoonboek {
         PersonData persons = new PersonData();
         persons.add(new PersonData("Jan", "Jansen", "040123", false));
         persons.add(new PersonData("Piet", "Pieters", "040124", true));
+        persons.add(new PersonData("Kees", "Pieters", "040122", false));
+        persons.add(new PersonData("Truus", "de Jager", "043944", false));
+        persons.add(new PersonData("Klara", "Renders", "29485", false));
 
         //System.out.println(persons.get(0));
         persons.printAll();
 
-        persons.searchFirstName("Piet");
+        System.out.println();
+        System.out.println("Search on first name:");
+        persons.searchFirstName(PersonData.Key.FIRSTNAME, "Piet");
+        System.out.println("Search on last name:");
+        persons.searchFirstName(PersonData.Key.LASTNAME, "de Jager");
+        System.out.println("Search on phone number:");
+        persons.searchFirstName(PersonData.Key.PHONENR, "040123");
     }
 }
 
@@ -46,9 +55,32 @@ class PersonData extends ArrayList<PersonData> {
         System.out.println(p);
     }
 
-    public void searchFirstName (String firstName){
+    enum Key {FIRSTNAME, LASTNAME, PHONENR}
+
+    public void searchFirstName (Key sk , String value){
         for (PersonData p: this)
-            if (p.firstName.equals(firstName)) printPerson(p);
+        switch (sk) {
+            case FIRSTNAME:
+                if (p.firstName.equals(value)) printPerson(p);
+                break;
+            case LASTNAME:
+                if (p.lastName.equals(value)) printPerson(p);
+                break;
+            case PHONENR:
+                if (p.phoneNr.equals(value)) printPerson(p);
+        }
     }
 
+    public void sortOnKey (Key sk) {
+         switch (sk) {
+            case FIRSTNAME:
+                //
+                break;
+            case LASTNAME:
+                //
+                break;
+            case PHONENR:
+                //
+        }
+    }
 }
